@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    tools:context="com.example.shahbazahmed.loginmvvmdatabinding.RegisterActivity">
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textSize="24sp"
+        android:text="REGISTER" />
+
+    <TextView
+        android:id="@+id/tv_register_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="Please register with Zolo to continue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:hint="YOUR PHONE NUMBER"
+            app:met_baseColor="@color/white"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="16sp"
+            app:met_iconLeft="@drawable/ic_call_white_24dp"
+            app:met_primaryColor="@color/colorAccent" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:hint="YOUR EMAIL"
+            app:met_baseColor="@color/white"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="16sp"
+            app:met_iconLeft="@drawable/ic_email_white_24dp"
+            app:met_primaryColor="@color/colorAccent" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:hint="YOUR NAME"
+            app:met_baseColor="@color/white"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="16sp"
+            app:met_iconLeft="@drawable/ic_short_text_white_24dp"
+            app:met_primaryColor="@color/colorAccent" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:hint="SET PASSWORD"
+            android:inputType="textPassword"
+            app:met_baseColor="@color/white"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelTextSize="16sp"
+            app:met_iconLeft="@drawable/ic_password_white_24dp"
+            app:met_primaryColor="@color/colorAccent" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/colorAccent"
+            android:padding="12dp"
+            android:text="REGISTER"
+            android:textColor="@color/textDark" />
+    </LinearLayout>
+
+</LinearLayout>
