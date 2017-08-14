@@ -19,10 +19,7 @@ import com.rengwuxian.materialedittext.validation.METValidator;
  */
 
 public class RegisterViewModel extends BaseObservable {
-    private String name;
-    private String phone;
-    private String email;
-    private String password;
+    private String name, phone, email, password;
 
     private PhoneValidator mPhoneValidator;
     private EmailValidator mEmailValidator;
@@ -31,7 +28,7 @@ public class RegisterViewModel extends BaseObservable {
     private boolean mRegisterEnabled;
 
     private UserRepository mUserRepository;
-    private ErrorListener mListener;
+    private ViewListener mListener;
 
     public RegisterViewModel(UserRepository userRepository) {
         this.mUserRepository = userRepository;
@@ -46,7 +43,7 @@ public class RegisterViewModel extends BaseObservable {
         mPasswordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
     }
 
-    public void setErrorListener(ErrorListener listener) {
+    public void setErrorListener(ViewListener listener) {
         this.mListener = listener;
     }
 
@@ -112,6 +109,7 @@ public class RegisterViewModel extends BaseObservable {
             // Save the user in DB
             try {
                 mUserRepository.save(new User(email, name, phone, password));
+                mListener.onLoginSuccess();
             } catch (UserAlreadyExistsException e) {
                 Log.d("RegisterViewModel", "Error while saving: " + e.getMessage());
                 mListener.onError("User Already Exists", "User with given email already exists.");
@@ -137,7 +135,10 @@ public class RegisterViewModel extends BaseObservable {
         return mPasswordValidator;
     }
 
-    public interface ErrorListener {
+    public interface ViewListener {
+
+        void onLoginSuccess();
+
         void onError(String header, String message);
     }
 }

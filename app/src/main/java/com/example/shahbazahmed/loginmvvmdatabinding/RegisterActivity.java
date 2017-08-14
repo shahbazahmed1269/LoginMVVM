@@ -15,7 +15,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import javax.inject.Inject;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterViewModel.ErrorListener {
+public class RegisterActivity extends AppCompatActivity implements RegisterViewModel.ViewListener {
     private RegisterViewModel viewModel;
     @Inject
     UserRepository userRepository;
@@ -47,7 +47,21 @@ public class RegisterActivity extends AppCompatActivity implements RegisterViewM
     }
 
     @Override
+    public void onLoginSuccess() {
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK |
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+        );
+        startActivity(intent);
+    }
+
+    @Override
     public void onError(String title, String message) {
+        redirectToLoginWithMessage(title, message);
+    }
+
+    private void redirectToLoginWithMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
         builder.setTitle(title)
                 .setMessage(message)
