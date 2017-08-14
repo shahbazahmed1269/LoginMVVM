@@ -1,22 +1,15 @@
 package com.example.shahbazahmed.loginmvvmdatabinding.viewmodels;
 
 import android.databinding.BaseObservable;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
 
 import android.util.Log;
 
 
-import com.example.shahbazahmed.loginmvvmdatabinding.BR;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.EmailValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.NameValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PasswordValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PhoneValidator;
 import com.rengwuxian.materialedittext.validation.METValidator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shahbazahmed on 14/08/17.

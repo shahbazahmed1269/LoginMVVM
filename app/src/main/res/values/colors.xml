@@ -7,4 +7,5 @@
     <color name="textDark">#242320</color>
     <color name="textLight">#fff</color>
     <color name="white">#fff</color>
+    <color name="lightGrey">#D3D3D3</color>
 </resources>

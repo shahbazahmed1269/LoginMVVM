@@ -11,4 +11,9 @@
         <item name="android:textColor">@color/textLight</item>
     </style>
 
+    <style name="accentButton" parent="ThemeOverlay.AppCompat">
+        <item name="colorButtonNormal">@drawable/btn_accent</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
 </resources>
