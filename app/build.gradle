@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.example.shahbazahmed.loginmvvmdatabinding"
         minSdkVersion 19
@@ -23,15 +24,23 @@ android {
     }
 }
 
+ext {
+    dagger_version = '2.11'
+    support_lib_version = '26.0.1'
+    material_edittext_version = '2.1.4'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.0.1'
-    compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
+    compile "com.android.support:appcompat-v7:$support_lib_version"
+    compile "com.android.support:design:$support_lib_version"
+    compile "com.rengwuxian.materialedittext:library:$material_edittext_version"
+    compile "com.google.dagger:dagger:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
 }

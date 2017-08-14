@@ -5,6 +5,9 @@ import android.databinding.BaseObservable;
 import android.util.Log;
 
 
+import com.example.shahbazahmed.loginmvvmdatabinding.entities.User;
+import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserAlreadyExistsException;
+import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.EmailValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.NameValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PasswordValidator;
@@ -21,22 +24,30 @@ public class RegisterViewModel extends BaseObservable {
     private String email;
     private String password;
 
-    private PhoneValidator phoneValidator;
-    private EmailValidator emailValidator;
-    private NameValidator nameValidator;
-    private PasswordValidator passwordValidator;
-    private boolean registerEnabled;
+    private PhoneValidator mPhoneValidator;
+    private EmailValidator mEmailValidator;
+    private NameValidator mNameValidator;
+    private PasswordValidator mPasswordValidator;
+    private boolean mRegisterEnabled;
 
-    public RegisterViewModel() {
+    private UserRepository mUserRepository;
+    private ErrorListener mListener;
+
+    public RegisterViewModel(UserRepository userRepository) {
+        this.mUserRepository = userRepository;
         name = "";
         phone = "";
         email = "";
         password = "";
-        registerEnabled = false;
-        phoneValidator = new PhoneValidator("Invalid Phone number");
-        emailValidator = new EmailValidator("Invalid Email");
-        nameValidator = new NameValidator("Name cannot be empty");
-        passwordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
+        mRegisterEnabled = false;
+        mPhoneValidator = new PhoneValidator("Invalid Phone number");
+        mEmailValidator = new EmailValidator("Invalid Email");
+        mNameValidator = new NameValidator("Name cannot be empty");
+        mPasswordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
+    }
+
+    public void setErrorListener(ErrorListener listener) {
+        this.mListener = listener;
     }
 
     public String getName() {
@@ -80,42 +91,54 @@ public class RegisterViewModel extends BaseObservable {
     }
 
     public boolean isRegisterEnabled() {
-        return registerEnabled;
+        return mRegisterEnabled;
     }
 
     public void setRegisterEnabled(boolean registerEnabled) {
-        this.registerEnabled = registerEnabled;
+        this.mRegisterEnabled = registerEnabled;
         notifyChange();
     }
 
     public boolean isInputValid() {
-        return phoneValidator.isValid(phone, phone.length() == 0) &&
-                emailValidator.isValid(email, email.length() == 0) &&
-                nameValidator.isValid(name, name.length() == 0) &&
-                passwordValidator.isValid(password, password.length() == 0);
+        return mPhoneValidator.isValid(phone, phone.length() == 0) &&
+                mEmailValidator.isValid(email, email.length() == 0) &&
+                mNameValidator.isValid(name, name.length() == 0) &&
+                mPasswordValidator.isValid(password, password.length() == 0);
     }
 
     public void onRegisterClick() {
         if (isInputValid()) {
-            Log.d("RegisterViewModel", "Saving user in DB");
+            setRegisterEnabled(false);
             // Save the user in DB
+            try {
+                mUserRepository.save(new User(email, name, phone, password));
+            } catch (UserAlreadyExistsException e) {
+                Log.d("RegisterViewModel", "Error while saving: " + e.getMessage());
+                mListener.onError("User Already Exists", "User with given email already exists.");
+            } finally {
+                setRegisterEnabled(true);
+            }
         }
     }
 
     public METValidator getPhoneValidator() {
-        return phoneValidator;
+        return mPhoneValidator;
     }
 
     public METValidator getEmailValidator() {
-        return emailValidator;
+        return mEmailValidator;
     }
 
-    public NameValidator getNameValidator() {
-        return nameValidator;
+    public NameValidator getmNameValidator() {
+        return mNameValidator;
     }
 
     public PasswordValidator getPasswordValidator() {
-        return passwordValidator;
+        return mPasswordValidator;
+    }
+
+    public interface ErrorListener {
+        void onError(String header, String message);
     }
 }
 
