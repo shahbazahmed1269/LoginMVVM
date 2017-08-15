@@ -11,17 +11,15 @@ import android.widget.LinearLayout;
 import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityProfileBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
-import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
 import com.example.shahbazahmed.loginmvvmdatabinding.viewmodels.ProfileViewModel;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import javax.inject.Inject;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileViewModel.ViewListener {
-    private ProfileViewModel viewModel;
-    private LinearLayout llParent;
     @Inject
-    UserRepository userRepository;
+    ProfileViewModel viewModel;
+    private LinearLayout mLlParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +29,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileViewMod
         );
         String email = getIntent().getStringExtra("email");
         DaggerAppComponent.builder().build().inject(this);
-        viewModel = new ProfileViewModel(email, userRepository);
+        viewModel.setEmail(email);
         viewModel.setViewListener(this);
         binding.setViewModel(viewModel);
         MaterialEditText phoneEditText = binding.etPhoneUpdate;
         MaterialEditText emailEditText = binding.etEmailUpdate;
         MaterialEditText nameEditText = binding.etNameUpdate;
-        llParent = binding.llUpdateParent;
+        mLlParent = binding.llUpdateParent;
         phoneEditText.setAutoValidate(true);
         emailEditText.setAutoValidate(true);
         nameEditText.setAutoValidate(true);
@@ -47,8 +45,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileViewMod
 
     @Override
     public void onMessage(String message) {
-        InputMethodManager imm = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(
+                Activity.INPUT_METHOD_SERVICE
+        );
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        Snackbar.make(llParent, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mLlParent, message, Snackbar.LENGTH_LONG).show();
     }
 }

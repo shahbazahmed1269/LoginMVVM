@@ -11,12 +11,14 @@ import com.example.shahbazahmed.loginmvvmdatabinding.validators.NameValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PhoneValidator;
 import com.rengwuxian.materialedittext.validation.METValidator;
 
+import javax.inject.Inject;
+
 /**
  * Created by shahbazahmed on 15/08/17.
  */
 
 public class ProfileViewModel extends BaseObservable {
-    private String name, phone, email;
+    private String mName, mPhone, mEmail;
     private boolean mUpdateEnabled;
     private ViewListener mListener;
 
@@ -24,15 +26,16 @@ public class ProfileViewModel extends BaseObservable {
     private NameValidator mNameValidator;
     private UserRepository mUserRepository;
 
-    public ProfileViewModel(String email, UserRepository userRepository) {
-        this.mUserRepository = userRepository;
-        this.email = email;
-        User user = userRepository.fetchByEmail(email);
-        this.name = user.getName();
-        this.phone = user.getPhone();
+    @Inject
+    public ProfileViewModel(
+            PhoneValidator phoneValidator,
+            NameValidator nameValidator,
+            UserRepository userRepository
+    ) {
         mUpdateEnabled = false;
-        mPhoneValidator = new PhoneValidator("Invalid Phone number");
-        mNameValidator = new NameValidator("Name cannot be empty");
+        this.mUserRepository = userRepository;
+        mPhoneValidator = phoneValidator;
+        mNameValidator = nameValidator;
     }
 
     public void setViewListener(ViewListener listener) {
@@ -40,31 +43,43 @@ public class ProfileViewModel extends BaseObservable {
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
         notifyChange();
         setUpdateEnabled(isInputValid());
     }
 
     public String getPhone() {
-        return phone;
+        return mPhone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.mPhone = phone;
         notifyChange();
         setUpdateEnabled(isInputValid());
     }
 
     public String getEmail() {
-        return email;
+        return mEmail;
+
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.mEmail = email;
+        updateDetails();
+    }
+
+    private void updateDetails() {
+        if (mEmail != null && mEmail.length() > 0) {
+            User user = mUserRepository.fetchByEmail(mEmail);
+            this.mName = user.getName();
+            this.mPhone = user.getPhone();
+        } else {
+            mListener.onMessage("Error while signing in. Please retry.");
+        }
     }
 
     public boolean isUpdateEnabled() {
@@ -76,9 +91,9 @@ public class ProfileViewModel extends BaseObservable {
         notifyChange();
     }
 
-    public boolean isInputValid() {
-        return mPhoneValidator.isValid(phone, phone.length() == 0) &&
-                mNameValidator.isValid(name, name.length() == 0);
+    private boolean isInputValid() {
+        return mPhoneValidator.isValid(mPhone, mPhone.length() == 0) &&
+                mNameValidator.isValid(mName, mName.length() == 0);
     }
 
     public void onUpdateClick() {
@@ -86,9 +101,9 @@ public class ProfileViewModel extends BaseObservable {
             setUpdateEnabled(false);
             // Update the user in DB
             try {
-                User user = mUserRepository.fetchByEmail(email);
-                user.setName(name);
-                user.setPhone(phone);
+                User user = mUserRepository.fetchByEmail(mEmail);
+                user.setName(mName);
+                user.setPhone(mPhone);
                 mUserRepository.update(user);
                 mListener.onMessage("Profile details updated.");
             } catch (Exception e) {

@@ -14,7 +14,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = {AppModule.class, ViewModelModules.class, ValidatorModule.class})
 public interface AppComponent {
 
     void inject(RegisterActivity registerActivity);

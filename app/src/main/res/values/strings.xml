@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">LoginMVVMDatabinding</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOG IN</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="register">REGISTER</string>
+    <string name="register_details">Please register with Zolo to continue</string>
+    <string name="your_phone">YOUR PHONE NUMBER</string>
+    <string name="your_email">YOUR EMAIL</string>
+    <string name="your_name">YOUR NAME</string>
+    <string name="set_password">SET PASSWORD</string>
+    <string name="manage_profile">MANAGE YOUR PROFILE</string>
+    <string name="update">UPDATE</string>
+    <string name="enter_registered_email">Please enter your registered email</string>
+    <string name="reset">RESET</string>
 </resources>

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityForgotPasswordBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
-import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
 import com.example.shahbazahmed.loginmvvmdatabinding.viewmodels.ForgotPasswordViewModel;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -18,10 +17,8 @@ import javax.inject.Inject;
 public class ForgotPasswordActivity extends AppCompatActivity
         implements ForgotPasswordViewModel.ViewListener {
 
-    private static final int EMAIL_RESULT_CODE = 1;
-    private ForgotPasswordViewModel viewModel;
     @Inject
-    UserRepository userRepository;
+    ForgotPasswordViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +27,6 @@ public class ForgotPasswordActivity extends AppCompatActivity
                 this, R.layout.activity_forgot_password
         );
         DaggerAppComponent.builder().build().inject(this);
-        viewModel = new ForgotPasswordViewModel(userRepository);
         viewModel.setViewListener(this);
         binding.setViewModel(viewModel);
         MaterialEditText emailEditText = binding.etEmailForgot;

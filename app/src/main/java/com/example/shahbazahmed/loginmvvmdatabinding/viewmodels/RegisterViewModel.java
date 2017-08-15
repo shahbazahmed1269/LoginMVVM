@@ -14,33 +14,41 @@ import com.example.shahbazahmed.loginmvvmdatabinding.validators.PasswordValidato
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PhoneValidator;
 import com.rengwuxian.materialedittext.validation.METValidator;
 
+import javax.inject.Inject;
+
 /**
  * Created by shahbazahmed on 14/08/17.
  */
 
 public class RegisterViewModel extends BaseObservable {
-    private String name, phone, email, password;
+    private String mName, mPhone, mEmail, mPassword;
+    private boolean mRegisterEnabled;
+    private ViewListener mListener;
 
     private PhoneValidator mPhoneValidator;
     private EmailValidator mEmailValidator;
     private NameValidator mNameValidator;
     private PasswordValidator mPasswordValidator;
-    private boolean mRegisterEnabled;
-
     private UserRepository mUserRepository;
-    private ViewListener mListener;
 
-    public RegisterViewModel(UserRepository userRepository) {
-        this.mUserRepository = userRepository;
-        name = "";
-        phone = "";
-        email = "";
-        password = "";
+    @Inject
+    public RegisterViewModel(
+            PhoneValidator phoneValidator,
+            EmailValidator emailValidator,
+            NameValidator nameValidator,
+            PasswordValidator passwordValidator,
+            UserRepository userRepository
+    ) {
+        mName = "";
+        mPhone = "";
+        mEmail = "";
+        mPassword = "";
         mRegisterEnabled = false;
-        mPhoneValidator = new PhoneValidator("Invalid Phone number");
-        mEmailValidator = new EmailValidator("Invalid Email");
-        mNameValidator = new NameValidator("Name cannot be empty");
-        mPasswordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
+        this.mPhoneValidator = phoneValidator;
+        this.mEmailValidator = emailValidator;
+        this.mNameValidator = nameValidator;
+        this.mPasswordValidator = passwordValidator;
+        this.mUserRepository = userRepository;
     }
 
     public void setErrorListener(ViewListener listener) {
@@ -48,41 +56,41 @@ public class RegisterViewModel extends BaseObservable {
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
         notifyChange();
         setRegisterEnabled(isInputValid());
     }
 
     public String getPhone() {
-        return phone;
+        return mPhone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.mPhone = phone;
         notifyChange();
         setRegisterEnabled(isInputValid());
     }
 
     public String getEmail() {
-        return email;
+        return mEmail;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.mEmail = email;
         notifyChange();
         setRegisterEnabled(isInputValid());
     }
 
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.mPassword = password;
         notifyChange();
         setRegisterEnabled(isInputValid());
     }
@@ -97,10 +105,10 @@ public class RegisterViewModel extends BaseObservable {
     }
 
     public boolean isInputValid() {
-        return mPhoneValidator.isValid(phone, phone.length() == 0) &&
-                mEmailValidator.isValid(email, email.length() == 0) &&
-                mNameValidator.isValid(name, name.length() == 0) &&
-                mPasswordValidator.isValid(password, password.length() == 0);
+        return mPhoneValidator.isValid(mPhone, mPhone.length() == 0) &&
+                mEmailValidator.isValid(mEmail, mEmail.length() == 0) &&
+                mNameValidator.isValid(mName, mName.length() == 0) &&
+                mPasswordValidator.isValid(mPassword, mPassword.length() == 0);
     }
 
     public void onRegisterClick() {
@@ -108,11 +116,11 @@ public class RegisterViewModel extends BaseObservable {
             setRegisterEnabled(false);
             // Save the user in DB
             try {
-                mUserRepository.save(new User(email, name, phone, password));
+                mUserRepository.save(new User(mEmail, mName, mPhone, mPassword));
                 mListener.onLoginSuccess();
             } catch (UserAlreadyExistsException e) {
                 Log.d("RegisterViewModel", "Error while saving: " + e.getMessage());
-                mListener.onError("User Already Exists", "User with given email already exists.");
+                mListener.onError("User Already Exists", "User with given mEmail already exists.");
             } finally {
                 setRegisterEnabled(true);
             }

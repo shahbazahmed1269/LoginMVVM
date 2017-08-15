@@ -1,6 +1,7 @@
 package com.example.shahbazahmed.loginmvvmdatabinding.validators;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.rengwuxian.materialedittext.validation.METValidator;
 
@@ -16,7 +17,7 @@ public class EmailValidator extends METValidator {
 
     @Override
     public boolean isValid(@NonNull CharSequence text, boolean isEmpty) {
-        String regex = "[a-zA-Z]+[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+        String regex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
         return (!isEmpty && text.toString().matches(regex));
     }
 }

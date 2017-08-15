@@ -11,23 +11,29 @@ import com.example.shahbazahmed.loginmvvmdatabinding.validators.EmailValidator;
 
 import java.security.SecureRandom;
 
+import javax.inject.Inject;
+
 /**
  * Created by shahbazahmed on 15/08/17.
  */
 
 public class ForgotPasswordViewModel extends BaseObservable {
-    private String email;
-    private boolean resetEnabled;
-    private EmailValidator mEmailValidator;
+    private String mEmail;
+    private boolean mResetEnabled;
     private ViewListener mListener;
 
+    private EmailValidator mEmailValidator;
     private UserRepository mUserRepository;
 
-    public ForgotPasswordViewModel(UserRepository userRepository) {
-        this.mUserRepository = userRepository;
-        email = "";
-        resetEnabled = false;
-        mEmailValidator = new EmailValidator("Invalid Email");
+    @Inject
+    public ForgotPasswordViewModel(
+            EmailValidator emailValidator,
+            UserRepository userRepository
+    ) {
+        mEmail = "";
+        mResetEnabled = false;
+        mEmailValidator = emailValidator;
+        mUserRepository = userRepository;
     }
 
     public void setViewListener(ViewListener mListener) {
@@ -35,22 +41,22 @@ public class ForgotPasswordViewModel extends BaseObservable {
     }
 
     public String getEmail() {
-        return email;
+        return mEmail;
 
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.mEmail = email;
         notifyChange();
         setResetEnabled(isInputValid());
     }
 
     public boolean isResetEnabled() {
-        return resetEnabled;
+        return mResetEnabled;
     }
 
     public void setResetEnabled(boolean resetEnabled) {
-        this.resetEnabled = resetEnabled;
+        this.mResetEnabled = resetEnabled;
     }
 
     public EmailValidator getEmailValidator() {
@@ -58,19 +64,20 @@ public class ForgotPasswordViewModel extends BaseObservable {
     }
 
     private boolean isInputValid() {
-        return mEmailValidator.isValid(email, email.length() == 0);
+        return mEmailValidator.isValid(mEmail, mEmail.length() == 0);
     }
 
     public void onResetClick() {
         if (isInputValid()) {
             setResetEnabled(false);
             try {
-                User user = mUserRepository.fetchByEmail(email);
-                if (user != null && user.getEmail().equals(email)) {
+                User user = mUserRepository.fetchByEmail(mEmail);
+                if (user != null && user.getEmail().equals(mEmail)) {
                     // User exists in local DB, generate new password
                     final String newPassword = randomString(8);
                     user.setPassword(newPassword);
                     mUserRepository.update(user);
+                    // Initiate sending mEmail in a new thread.
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -81,7 +88,7 @@ public class ForgotPasswordViewModel extends BaseObservable {
                                     "LoginApp support team",
                                     "Your Login App Password reset",
                                     "Your password is: " + newPassword,
-                                    email,
+                                    mEmail,
                                     "false"
                             );
                             Log.d("ForgotPasswordViewModel", "Email sent Response: " + res);
@@ -90,7 +97,7 @@ public class ForgotPasswordViewModel extends BaseObservable {
                     mListener.onEmailSentSuccess();
                 } else {
                     // User not found
-                    mListener.onMessage("Email not found", "The given email is not registered. Please create an account first.");
+                    mListener.onMessage("Email not found", "The given mEmail is not registered. Please create an account first.");
                 }
             } catch (Exception e) {
                 Log.d("LoginViewModel", "Error while saving: " + e.getMessage());
@@ -100,7 +107,7 @@ public class ForgotPasswordViewModel extends BaseObservable {
         }
     }
 
-    String randomString(int len) {
+    private String randomString(int len) {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder(len);

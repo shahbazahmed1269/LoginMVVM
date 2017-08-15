@@ -3,112 +3,115 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewModel" type="com.example.shahbazahmed.loginmvvmdatabinding.viewmodels.RegisterViewModel"/>
+
+        <variable
+            name="viewModel"
+            type="com.example.shahbazahmed.loginmvvmdatabinding.viewmodels.RegisterViewModel" />
     </data>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp">
-
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="78dp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:textSize="24sp"
-        android:text="REGISTER" />
-
-    <TextView
-        android:id="@+id/tv_register_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="Please register with Zolo to continue" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="78dp"
+            android:text="@string/register"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_register_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="@string/register_details" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_phone"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:hint="YOUR PHONE NUMBER"
-            android:inputType="phone"
-            android:text="@={viewModel.phone}"
-            app:met_baseColor="@color/white"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="16sp"
-            app:met_iconLeft="@drawable/ic_call_white_24dp"
-            app:met_primaryColor="@color/colorAccent" />
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_email"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:hint="YOUR EMAIL"
-            android:text="@={viewModel.email}"
-            app:met_baseColor="@color/white"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="16sp"
-            app:met_iconLeft="@drawable/ic_email_white_24dp"
-            app:met_primaryColor="@color/colorAccent" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:hint="@string/your_phone"
+                android:inputType="phone"
+                android:text="@={viewModel.phone}"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="16sp"
+                app:met_iconLeft="@drawable/ic_call_white_24dp"
+                app:met_primaryColor="@color/colorAccent" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_name"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:hint="YOUR NAME"
-            android:text="@={viewModel.name}"
-            app:met_baseColor="@color/white"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="16sp"
-            app:met_iconLeft="@drawable/ic_short_text_white_24dp"
-            app:met_primaryColor="@color/colorAccent" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:hint="@string/your_email"
+                android:text="@={viewModel.email}"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="16sp"
+                app:met_iconLeft="@drawable/ic_email_white_24dp"
+                app:met_primaryColor="@color/colorAccent" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_password"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:hint="SET PASSWORD"
-            android:text="@={viewModel.password}"
-            android:inputType="textPassword"
-            app:met_baseColor="@color/white"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelTextSize="16sp"
-            app:met_iconLeft="@drawable/ic_password_white_24dp"
-            app:met_primaryColor="@color/colorAccent" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:hint="@string/your_name"
+                android:text="@={viewModel.name}"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="16sp"
+                app:met_iconLeft="@drawable/ic_short_text_white_24dp"
+                app:met_primaryColor="@color/colorAccent" />
 
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="24dp"
-            android:theme="@style/accentButton"
-            android:padding="12dp"
-            android:text="REGISTER"
-            android:enabled="@{viewModel.registerEnabled}"
-            android:onClick="@{() -> viewModel.onRegisterClick()}" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:hint="@string/set_password"
+                android:inputType="textPassword"
+                android:text="@={viewModel.password}"
+                app:met_baseColor="@color/white"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelTextSize="16sp"
+                app:met_iconLeft="@drawable/ic_password_white_24dp"
+                app:met_primaryColor="@color/colorAccent" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:enabled="@{viewModel.registerEnabled}"
+                android:onClick="@{() -> viewModel.onRegisterClick()}"
+                android:padding="12dp"
+                android:text="@string/register"
+                android:theme="@style/accentButton" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
 </layout>

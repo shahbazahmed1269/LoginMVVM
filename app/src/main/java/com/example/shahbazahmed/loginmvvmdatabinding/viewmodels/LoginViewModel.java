@@ -6,8 +6,12 @@ import android.util.Log;
 import com.example.shahbazahmed.loginmvvmdatabinding.entities.User;
 import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.EmailValidator;
+import com.example.shahbazahmed.loginmvvmdatabinding.validators.NameValidator;
 import com.example.shahbazahmed.loginmvvmdatabinding.validators.PasswordValidator;
+import com.example.shahbazahmed.loginmvvmdatabinding.validators.PhoneValidator;
 import com.rengwuxian.materialedittext.validation.METValidator;
+
+import javax.inject.Inject;
 
 /**
  * Created by shahbazahmed on 15/08/17.
@@ -15,20 +19,25 @@ import com.rengwuxian.materialedittext.validation.METValidator;
 
 public class LoginViewModel extends BaseObservable {
 
-    private String email, password;
-    private boolean loginEnabled;
+    private String mEmail, mPassword;
+    private boolean mLoginEnabled;
     private ViewListener mListener;
     private EmailValidator mEmailValidator;
     private PasswordValidator mPasswordValidator;
 
     private UserRepository mUserRepository;
 
-    public LoginViewModel(UserRepository userRepository) {
+    @Inject
+    public LoginViewModel(
+            EmailValidator emailValidator,
+            PasswordValidator passwordValidator,
+            UserRepository userRepository
+    ) {
+        mEmail = "";
+        mPassword = "";
+        mEmailValidator = emailValidator;
+        mPasswordValidator = passwordValidator;
         this.mUserRepository = userRepository;
-        email = "";
-        password = "";
-        mEmailValidator = new EmailValidator("Invalid Email");
-        mPasswordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
     }
 
     public void setViewListener(ViewListener listener) {
@@ -36,57 +45,56 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public String getEmail() {
-        return email;
+        return mEmail;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.mEmail = email;
         notifyChange();
         setLoginEnabled(isInputValid());
     }
 
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.mPassword = password;
         notifyChange();
         setLoginEnabled(isInputValid());
     }
 
     public boolean isLoginEnabled() {
-        return loginEnabled;
+        return mLoginEnabled;
     }
 
     public void setLoginEnabled(boolean loginEnabled) {
-        this.loginEnabled = loginEnabled;
+        this.mLoginEnabled = loginEnabled;
         notifyChange();
     }
 
     private boolean isInputValid() {
-        return mEmailValidator.isValid(email, email.length() == 0) &&
-                mPasswordValidator.isValid(password, password.length() == 0);
+        return mEmailValidator.isValid(mEmail, mEmail.length() == 0) &&
+                mPasswordValidator.isValid(mPassword, mPassword.length() == 0);
     }
 
     public void onLoginClick() {
         if (isInputValid()) {
             setLoginEnabled(false);
             try {
-                User user = mUserRepository.fetchByEmail(email);
-                if (user != null && user.getEmail().equals(email)) {
+                User user = mUserRepository.fetchByEmail(mEmail);
+                if (user != null && user.getEmail().equals(mEmail)) {
                     // User exists in local DB, check for password
-                    if (user.getPassword().equals(password)) {
+                    if (user.getPassword().equals(mPassword)) {
                         // Login successful
-                        mListener.onMessage("Login Success.");
                         mListener.onLoginSuccess();
                     } else {
-                        // Wrong password
+                        // Wrong mPassword
                         mListener.onMessage("Wrong password. Please retry.");
                     }
                 } else {
                     // User not found
-                    mListener.onMessage("Email not Registered .Please Register first.");
+                    mListener.onMessage("Email not Registered. Please Register first.");
                 }
             } catch (Exception e) {
                 Log.d("LoginViewModel", "Error while saving: " + e.getMessage());

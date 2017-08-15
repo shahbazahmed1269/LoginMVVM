@@ -10,17 +10,14 @@ import android.os.Bundle;
 import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityRegisterBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
-import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
 import com.example.shahbazahmed.loginmvvmdatabinding.viewmodels.RegisterViewModel;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import javax.inject.Inject;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterViewModel.ViewListener {
-    private RegisterViewModel viewModel;
     @Inject
-    UserRepository userRepository;
-
+    RegisterViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterViewM
                 this, R.layout.activity_register
         );
         DaggerAppComponent.builder().build().inject(this);
-        viewModel = new RegisterViewModel(userRepository);
         viewModel.setErrorListener(this);
         binding.setViewModel(viewModel);
         MaterialEditText phoneEditText = binding.etPhone;
@@ -71,7 +67,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterViewM
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(
+                                        RegisterActivity.this, LoginActivity.class
+                                );
                                 intent.setFlags(
                                         Intent.FLAG_ACTIVITY_NEW_TASK |
                                                 Intent.FLAG_ACTIVITY_CLEAR_TASK
