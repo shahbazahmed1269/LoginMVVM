@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViewModel.V
         );
         DaggerAppComponent.builder().build().inject(this);
         viewModel = new LoginViewModel(userRepository);
-        viewModel.setErrorListener(this);
+        viewModel.setViewListener(this);
         binding.setViewModel(viewModel);
         MaterialEditText emailEditText = binding.etEmailLogin;
         MaterialEditText passwordEditText = binding.etPasswordLogin;

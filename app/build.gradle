@@ -18,9 +18,25 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'ELASTICMAIL_USER', ElasticmailUser
+            it.buildConfigField 'String', 'ELASTICMAIL_API_KEY', ElasticMailApiKey
+        }
     }
     dataBinding {
         enabled = true
+    }
+}
+
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
     }
 }
 
@@ -42,5 +58,6 @@ dependencies {
     compile "com.rengwuxian.materialedittext:library:$material_edittext_version"
     compile "com.google.dagger:dagger:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
 
 }

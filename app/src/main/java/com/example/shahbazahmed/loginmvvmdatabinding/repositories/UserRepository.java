@@ -10,4 +10,6 @@ public interface UserRepository {
     void save(User user) throws UserAlreadyExistsException;
 
     User fetchByEmail(String email);
+
+    void updatePassword(User user, String password);
 }

@@ -16,7 +16,7 @@ import com.rengwuxian.materialedittext.validation.METValidator;
 public class LoginViewModel extends BaseObservable {
 
     private String email, password;
-    private boolean mLoginEnabled;
+    private boolean loginEnabled;
     private EmailValidator mEmailValidator;
     private PasswordValidator mPasswordValidator;
 
@@ -31,7 +31,7 @@ public class LoginViewModel extends BaseObservable {
         mPasswordValidator = new PasswordValidator("Password should be between 6 to 15 characters");
     }
 
-    public void setErrorListener(ViewListener listener) {
+    public void setViewListener(ViewListener listener) {
         this.mListener = listener;
     }
 
@@ -56,15 +56,15 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public boolean isLoginEnabled() {
-        return mLoginEnabled;
+        return loginEnabled;
     }
 
     public void setLoginEnabled(boolean loginEnabled) {
-        this.mLoginEnabled = loginEnabled;
+        this.loginEnabled = loginEnabled;
         notifyChange();
     }
 
-    public boolean isInputValid() {
+    private boolean isInputValid() {
         return mEmailValidator.isValid(email, email.length() == 0) &&
                 mPasswordValidator.isValid(password, password.length() == 0);
     }

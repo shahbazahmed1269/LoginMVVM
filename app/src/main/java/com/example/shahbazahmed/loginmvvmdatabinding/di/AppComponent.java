@@ -1,5 +1,6 @@
 package com.example.shahbazahmed.loginmvvmdatabinding.di;
 
+import com.example.shahbazahmed.loginmvvmdatabinding.ForgotPasswordActivity;
 import com.example.shahbazahmed.loginmvvmdatabinding.LoginActivity;
 import com.example.shahbazahmed.loginmvvmdatabinding.RegisterActivity;
 
@@ -17,5 +18,6 @@ public interface AppComponent {
 
     void inject(RegisterActivity registerActivity);
     void inject(LoginActivity loginActivity);
+    void inject(ForgotPasswordActivity forgotPasswordActivity);
 
 }
