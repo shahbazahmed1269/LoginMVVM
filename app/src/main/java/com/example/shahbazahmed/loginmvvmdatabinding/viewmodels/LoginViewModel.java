@@ -17,11 +17,11 @@ public class LoginViewModel extends BaseObservable {
 
     private String email, password;
     private boolean loginEnabled;
+    private ViewListener mListener;
     private EmailValidator mEmailValidator;
     private PasswordValidator mPasswordValidator;
 
     private UserRepository mUserRepository;
-    private ViewListener mListener;
 
     public LoginViewModel(UserRepository userRepository) {
         this.mUserRepository = userRepository;
@@ -78,15 +78,15 @@ public class LoginViewModel extends BaseObservable {
                     // User exists in local DB, check for password
                     if (user.getPassword().equals(password)) {
                         // Login successful
-                        mListener.onMessage("Login Succussful", "Proceeding to Profile page");
+                        mListener.onMessage("Login Success.");
                         mListener.onLoginSuccess();
                     } else {
                         // Wrong password
-                        mListener.onMessage("Wrong password", "Please retry");
+                        mListener.onMessage("Wrong password. Please retry.");
                     }
                 } else {
                     // User not found
-                    mListener.onMessage("Email not Registered", "Please Register first");
+                    mListener.onMessage("Email not Registered .Please Register first.");
                 }
             } catch (Exception e) {
                 Log.d("LoginViewModel", "Error while saving: " + e.getMessage());
@@ -109,6 +109,6 @@ public class LoginViewModel extends BaseObservable {
 
         void onLoginSuccess();
 
-        void onMessage(String header, String message);
+        void onMessage(String message);
     }
 }

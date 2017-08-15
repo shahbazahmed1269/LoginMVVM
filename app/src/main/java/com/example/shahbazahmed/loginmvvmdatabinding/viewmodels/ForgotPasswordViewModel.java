@@ -69,7 +69,8 @@ public class ForgotPasswordViewModel extends BaseObservable {
                 if (user != null && user.getEmail().equals(email)) {
                     // User exists in local DB, generate new password
                     final String newPassword = randomString(8);
-                    mUserRepository.updatePassword(user, newPassword);
+                    user.setPassword(newPassword);
+                    mUserRepository.update(user);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

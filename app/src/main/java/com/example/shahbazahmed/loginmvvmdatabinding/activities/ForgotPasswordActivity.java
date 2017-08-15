@@ -1,14 +1,12 @@
-package com.example.shahbazahmed.loginmvvmdatabinding;
+package com.example.shahbazahmed.loginmvvmdatabinding.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
+import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityForgotPasswordBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
 import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;

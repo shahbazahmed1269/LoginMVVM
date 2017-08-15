@@ -1,4 +1,4 @@
-package com.example.shahbazahmed.loginmvvmdatabinding;
+package com.example.shahbazahmed.loginmvvmdatabinding.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityRegisterBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
 import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;

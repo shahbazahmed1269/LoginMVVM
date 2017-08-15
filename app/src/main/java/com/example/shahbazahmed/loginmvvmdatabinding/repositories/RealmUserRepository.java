@@ -58,13 +58,12 @@ public class RealmUserRepository implements UserRepository {
     }
 
     @Override
-    public void updatePassword(User user, String password) {
-        final User usr = new User(user.getEmail(), user.getName(), user.getPhone(), password);
+    public void update(final User user) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(usr);
+                realm.copyToRealmOrUpdate(user);
             }
         });
         if (!realm.isClosed()) {

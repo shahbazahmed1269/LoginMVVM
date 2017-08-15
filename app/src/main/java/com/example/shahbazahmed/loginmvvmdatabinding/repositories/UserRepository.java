@@ -11,5 +11,5 @@ public interface UserRepository {
 
     User fetchByEmail(String email);
 
-    void updatePassword(User user, String password);
+    void update(User user);
 }

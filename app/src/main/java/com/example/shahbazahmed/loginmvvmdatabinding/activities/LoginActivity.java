@@ -1,14 +1,20 @@
-package com.example.shahbazahmed.loginmvvmdatabinding;
+package com.example.shahbazahmed.loginmvvmdatabinding.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.shahbazahmed.loginmvvmdatabinding.R;
 import com.example.shahbazahmed.loginmvvmdatabinding.databinding.ActivityLoginBinding;
 import com.example.shahbazahmed.loginmvvmdatabinding.di.DaggerAppComponent;
 import com.example.shahbazahmed.loginmvvmdatabinding.repositories.UserRepository;
@@ -19,6 +25,7 @@ import javax.inject.Inject;
 
 public class LoginActivity extends AppCompatActivity implements LoginViewModel.ViewListener {
     private LoginViewModel viewModel;
+    private CoordinatorLayout llParent;
     @Inject
     UserRepository userRepository;
 
@@ -28,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements LoginViewModel.V
         ActivityLoginBinding binding = DataBindingUtil.setContentView(
                 this, R.layout.activity_login
         );
+        llParent = binding.clParent;
         DaggerAppComponent.builder().build().inject(this);
         viewModel = new LoginViewModel(userRepository);
         viewModel.setViewListener(this);
@@ -59,11 +67,17 @@ public class LoginActivity extends AppCompatActivity implements LoginViewModel.V
     @Override
     public void onLoginSuccess() {
         // Handle successful login
+        Intent i = new Intent(LoginActivity.this, ProfileActivity.class);
+        i.putExtra("email", viewModel.getEmail());
+        startActivity(i);
     }
 
     @Override
-    public void onMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
-        builder.setTitle(title).setMessage(message).create().show();
+    public void onMessage(String message) {
+        // Hide soft keyboard
+        InputMethodManager imm = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        Snackbar.make(llParent, message, Snackbar.LENGTH_LONG).show();
+
     }
 }

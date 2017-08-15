@@ -1,8 +1,9 @@
 package com.example.shahbazahmed.loginmvvmdatabinding.di;
 
-import com.example.shahbazahmed.loginmvvmdatabinding.ForgotPasswordActivity;
-import com.example.shahbazahmed.loginmvvmdatabinding.LoginActivity;
-import com.example.shahbazahmed.loginmvvmdatabinding.RegisterActivity;
+import com.example.shahbazahmed.loginmvvmdatabinding.activities.ForgotPasswordActivity;
+import com.example.shahbazahmed.loginmvvmdatabinding.activities.LoginActivity;
+import com.example.shahbazahmed.loginmvvmdatabinding.activities.ProfileActivity;
+import com.example.shahbazahmed.loginmvvmdatabinding.activities.RegisterActivity;
 
 import javax.inject.Singleton;
 
@@ -19,5 +20,6 @@ public interface AppComponent {
     void inject(RegisterActivity registerActivity);
     void inject(LoginActivity loginActivity);
     void inject(ForgotPasswordActivity forgotPasswordActivity);
+    void inject(ProfileActivity profileActivity);
 
 }
