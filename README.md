@@ -1,9 +1,9 @@
 # LoginMVVM
-Android login application with form validation and Database storage  made using MVVM and Data binding
+Android login application with form validation and Database storage  made using MVVM and Data binding.
 
 ### Steps to build
 1. Clone this branch locally.
-2. Add the following fields in `gradle.properties` file in LoginMVVMDatabinding directory:
+2. Add the following fields in `gradle.properties` file in `LoginMVVMDatabinding` directory:
    ElasticmailUser="xxx"
    ElasticMailApiKey="xxx"
 
@@ -11,3 +11,7 @@ Android login application with form validation and Database storage  made using 
 1. Android Databinding
 2. Dagger 2
 3. MaterialEditText
+
+### Screenshots
+<img src="https://github.com/shahbazahmed1269/LoginMVVM/blob/master/screen1.png" alt="LoginMVVM-screen-1" />
+<img src="https://github.com/shahbazahmed1269/LoginMVVM/blob/master/screen2.png" alt="LoginMVVM-screen-2" />
